@@ -42,8 +42,7 @@ public class MainActivity extends Activity {
         mApps = getPackageManager().queryIntentActivities(mainIntent, 0);       
     }  
 
-    private OnItemClickListener listener = new OnItemClickListener() 
-    {
+    private OnItemClickListener listener = new OnItemClickListener() {
     	@Override public void onItemClick(AdapterView<?> parent,
     			View view, int position,long id) {
     		ResolveInfo info = mApps.get(position);                          
@@ -86,8 +85,7 @@ public class MainActivity extends Activity {
 		}
 	}
     
-    public class AppsAdapter extends BaseAdapter   
-    {           
+    public class AppsAdapter extends BaseAdapter {           
         public AppsAdapter() {         }               
         public View getView(int position, View convertView, ViewGroup parent) {               
             ImageView i;                   
