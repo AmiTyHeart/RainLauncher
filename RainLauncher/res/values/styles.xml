@@ -1,3 +1,5 @@
 <resources>
-
+	<style name="theme_default" parent="android:Theme.Wallpaper">
+	    <item name="android:windowNoTitle"> true</item>
+	</style>
 </resources>

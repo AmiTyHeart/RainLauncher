@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
 
 	private List<ResolveInfo> mApps;
 	GridView grid;
+	final int MENU_FIRST = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +50,13 @@ public class MainActivity extends Activity {
     	    //该应用的包名            
     		String pkg = info.activityInfo.packageName;              
     	    //应用的主activity类            
-    		String cls = info.activityInfo.name;                          
+    		String cls = info.activityInfo.name;  
+    		Toast.makeText(getApplicationContext(), info + "\n" + cls,
+    				Toast.LENGTH_SHORT).show();
     	    ComponentName componet = new ComponentName(pkg, cls);                          
     	    Intent i = new Intent();              
-    	    i.setComponent(componet);              
+    	    i.setComponent(componet);  
+    	    i.setAction("android.intent.action.VIEW");
     	    startActivity(i); 
     	}
     	
@@ -60,7 +64,11 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        //getMenuInflater().inflate(R.menu.main, menu);
+    	menu.add(Menu.NONE, MENU_FIRST, 1, "设置壁纸")
+    		.setIcon(android.R.drawable.btn_star);
+    	menu.add(Menu.NONE, MENU_FIRST + 1, 2, "设置")
+			.setIcon(android.R.drawable.ic_menu_set_as);
         return true;
     }
 
@@ -70,11 +78,28 @@ public class MainActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        switch(id) {
+        case MENU_FIRST:
+        	onSetWallpaper(grid);
             return true;
-        }
+        case MENU_FIRST + 1:
+        	ComponentName componet = new ComponentName("com.android.settings",
+        			"com.android.settings.Settings");                          
+        	Intent i = new Intent();              
+        	i.setComponent(componet);  
+        	startActivity(i); 
+        	return true;
+        } 
         return super.onOptionsItemSelected(item);
     }
+    
+    public void onSetWallpaper(View view) {                           
+        //生成一个设置壁纸的请求                
+        final Intent pickWallpaper = new Intent(Intent.ACTION_SET_WALLPAPER);                   
+        Intent chooser = Intent.createChooser(pickWallpaper,"选择壁纸");                   
+        //发送设置壁纸的请求                   
+        startActivity(chooser);       
+    }  
     
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
