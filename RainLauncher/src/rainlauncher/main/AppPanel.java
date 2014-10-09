@@ -2,15 +2,18 @@ package rainlauncher.main;
 
 import java.util.List;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class AppPanel extends ViewGroup {
 	private Context mContext;
@@ -31,10 +34,22 @@ public class AppPanel extends ViewGroup {
 		
 		//≥ı ºªØchildview
 		for (ResolveInfo info : appList) {
-			CharSequence text = info.loadLabel(pm);
+			final CharSequence text = info.loadLabel(pm);
+			final String pkg = info.activityInfo.packageName;                  
+			final String cls = info.activityInfo.name;  
 			Drawable d = info.loadIcon(pm);
 			View view = LayoutInflater.from(mContext).inflate(R.layout.app_item, null);
 			((ImageView)view.findViewById(R.id.imageView)).setImageDrawable(d);
+			((ImageView)view.findViewById(R.id.imageView)).setOnClickListener(
+					new OnClickListener(){
+						@Override
+						public void onClick(View arg0) {							
+							ComponentName componet = new ComponentName(pkg, cls);                          
+				    	    Intent i = new Intent();              
+				    	    i.setComponent(componet);
+				    	    mContext.startActivity(i); 
+						}						
+					});
 			((TextView)view.findViewById(R.id.textView)).setText(text);
 			view.setFocusable(true);
 			addView(view);

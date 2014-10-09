@@ -137,7 +137,9 @@ public class MainActivity extends Activity {
         //getMenuInflater().inflate(R.menu.main, menu);
     	menu.add(Menu.NONE, MENU_FIRST, 1, "设置壁纸")
     		.setIcon(android.R.drawable.btn_star);
-    	menu.add(Menu.NONE, MENU_FIRST + 1, 2, "设置")
+    	menu.add(Menu.NONE, MENU_FIRST + 1, 2, "桌面设置")
+    		.setIcon(android.R.drawable.btn_star);
+    	menu.add(Menu.NONE, MENU_FIRST + 2, 3, "设置")
 			.setIcon(android.R.drawable.ic_menu_set_as);
         return true;
     }
@@ -153,6 +155,8 @@ public class MainActivity extends Activity {
         	onSetWallpaper();
             return true;
         case MENU_FIRST + 1:
+        	return true;
+        case MENU_FIRST + 2:
         	ComponentName componet = new ComponentName("com.android.settings",
         			"com.android.settings.Settings");                          
         	Intent i = new Intent();              
