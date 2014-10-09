@@ -150,7 +150,7 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
         switch(id) {
         case MENU_FIRST:
-//        	onSetWallpaper(grid);
+        	onSetWallpaper();
             return true;
         case MENU_FIRST + 1:
         	ComponentName componet = new ComponentName("com.android.settings",
@@ -163,7 +163,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
     
-    public void onSetWallpaper(View view) {                           
+    public void onSetWallpaper() {                           
         //生成一个设置壁纸的请求                
         final Intent pickWallpaper = new Intent(Intent.ACTION_SET_WALLPAPER);                   
         Intent chooser = Intent.createChooser(pickWallpaper,"选择壁纸");                   
