@@ -8,7 +8,7 @@
     <GridView
         android:layout_width="match_parent"           
         android:id="@+id/apps_list"          
-        android:numColumns="4"          
+        android:gravity="center"
         android:layout_height="wrap_content">      
     </GridView>  
 </LinearLayout>
