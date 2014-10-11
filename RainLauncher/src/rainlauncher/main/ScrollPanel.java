@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.widget.Scroller;
+import android.widget.Toast;
 
 public class ScrollPanel extends ViewGroup {
 	private final static String TAG = "WorkSpace";
@@ -157,15 +158,20 @@ public class ScrollPanel extends ViewGroup {
 				int velocityX = (int)tempVelocityTracker.getXVelocity();
 				
 				final int screenWidth = getWidth();
+				//	|**0****1**|**1****2**|**2****3**|
 				final int whichScreen = (getScrollX() + (screenWidth / 2)) / screenWidth;
+				//	0**********1**********2**********3
 				final float scrolledPos = (float) getScrollX() / screenWidth;
 				
 				if(velocityX > SNAP_VELOCITY && mCurrentScreen > 0){
-					final int bound = scrolledPos < whichScreen ? mCurrentScreen - 1 : mCurrentScreen;
-					snapToScreen(Math.min(whichScreen, bound));
+//					Toast.makeText(getContext(), "<==", Toast.LENGTH_SHORT).show();
+//					final int bound = scrolledPos < whichScreen ? mCurrentScreen - 1 : mCurrentScreen;
+					snapToScreen(mCurrentScreen - 1);
 				}else if(velocityX < - SNAP_VELOCITY && mCurrentScreen < mTotalScreen - 1){
-					final int bound = scrolledPos > whichScreen ? mCurrentScreen + 1 : mCurrentScreen;
-					snapToScreen(Math.min(whichScreen, bound));
+//					Toast.makeText(getContext(), "==>", Toast.LENGTH_SHORT).show();
+//					final int bound = scrolledPos > whichScreen ? mCurrentScreen + 1 : mCurrentScreen;
+					snapToScreen(mCurrentScreen + 1);
+//					snapToScreen(Math.min(whichScreen, bound));
 				}else{
 					snapToScreen(whichScreen);
 				}
