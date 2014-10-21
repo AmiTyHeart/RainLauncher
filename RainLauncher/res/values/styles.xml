@@ -7,4 +7,9 @@
 		<item name="android:windowNoTitle">true</item>
 		<item name="android:windowBackground">@color/dialog_color</item>
 	</style>
+	
+	<style name="Dialog_WrapContent" parent="@android:Theme.Dialog">
+	    <item name="android:windowNoTitle">true</item>     
+		<item name="android:windowBackground">@color/dialog_color</item>
+	</style>
 </resources>

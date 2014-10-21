@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ public class MainActivity extends Activity {
 		mPackageManager = getPackageManager();
 		layout = new ScrollPanel(mCtx);
 		setContentView(layout);
-		
+
 		//查询所有app
 		Intent i = new Intent(Intent.ACTION_MAIN, null);
 		i.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -43,10 +44,10 @@ public class MainActivity extends Activity {
 		
 		//初始化
 		//init();
-		AppPanel panel = new AppPanel(mCtx, mPackageManager, mList);
+		AppPanel panel = new AppPanel(this, mCtx, mPackageManager, mList);
 		layout.addView(panel);
 		
-		menu = new MenuDialog(this, R.style.Dialog_Fullscreen);
+		menu = new MenuDialog(this, R.style.Dialog_WrapContent);
 	}
 	
 /*
@@ -127,7 +128,7 @@ public class MainActivity extends Activity {
 			return false;
 		}else if(keyCode == KeyEvent.KEYCODE_MENU){
 			menu.show();
-			return false;
+			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}

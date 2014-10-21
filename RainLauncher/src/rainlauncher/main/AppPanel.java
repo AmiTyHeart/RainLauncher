@@ -2,6 +2,8 @@ package rainlauncher.main;
 
 import java.util.List;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -14,12 +16,14 @@ import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AppPanel extends ViewGroup {
 	private Context mContext;
@@ -30,11 +34,11 @@ public class AppPanel extends ViewGroup {
 	private int mControlWidth;
 	//ÆÁÊý
 	private int mScreen;
-	
-	
-	public AppPanel(Context context, PackageManager pm, List<ResolveInfo> appList) {
+	private Activity activity;
+	public AppPanel(Activity activity, Context context, PackageManager pm, List<ResolveInfo> appList) {
 		super(context);
 		this.mContext = context;
+		this.activity = activity;
 		//×ÜÆÁÊý
 		this.mScreen = (int)Math.ceil(((double)appList.size()) / (x * y));
 		
@@ -52,6 +56,8 @@ public class AppPanel extends ViewGroup {
 	        StateListDrawable sld = createSLD(mContext, d);
 	        iv.setImageDrawable(sld);
 			
+	        Display display = activity.getWindowManager().getDefaultDisplay();
+			  final int width = display.getWidth(); 
 			iv.setOnClickListener(
 					new OnClickListener(){
 						@Override
@@ -62,6 +68,21 @@ public class AppPanel extends ViewGroup {
 				    	    mContext.startActivity(i); 
 						}						
 					});
+			
+			iv.setOnLongClickListener(new OnLongClickListener(){
+
+				@Override
+				public boolean onLongClick(View arg0) {
+					
+					Dialog longDialog = new LongClickDialog(mContext, 
+							R.style.Dialog_WrapContent, pkg, (String) text);
+					longDialog.setCanceledOnTouchOutside(true);
+					longDialog.show();
+
+					return true;
+				}
+				
+			});
 			((TextView)view.findViewById(R.id.textView)).setText(text);
 			view.setFocusable(true);
 			addView(view);
